@@ -6,6 +6,11 @@
 package Client;
 
 import Interface.Interface;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.*;
+import com.itextpdf.*;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.io.FileOutputStream;
 import static java.lang.Integer.parseInt;
 import java.net.MalformedURLException;
@@ -149,17 +154,49 @@ public class system {
             menu();
         }
     }
-    
-    public void editAccount() throws Exception{
+    public void editExec() throws Exception{
+        System.out.println("-------------------------------");
+        System.out.println("---------EDIT-ACCOUNT----------");
+        
         System.out.print("Username: ");
         String username = input.nextLine();
-        System.out.print("New Username: ");
-        String newusername = input.nextLine();
+        int target_account_id = -1;
+        String unparsed_target_account_id = x.getAccountId(username);
+        try {
+            target_account_id = parseInt(unparsed_target_account_id);
+            System.out.print("Password: ");
+            String password = input.nextLine();
+            System.out.print("First Name: ");
+            String first_name = input.nextLine();
+            System.out.print("Last Name: ");
+            String last_name = input.nextLine();
+            System.out.print("IC/PassportNumber: ");
+            String ic_passportnum = input.nextLine();
+
+            String result = x.editProfile(target_account_id, password, first_name, last_name, ic_passportnum);
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println(unparsed_target_account_id);
+        }
+        admin_menu();
+    }
+    
+    public void editProfile() throws Exception{
+        System.out.println("-------------------------------");
+        System.out.println("---------EDIT-PROFILE----------");
+        
         System.out.print("Password: ");
         String password = input.nextLine();
-
-        x.editAccount(username, newusername, password);
-        System.out.println("### Done ###\n");
+        System.out.print("First Name: ");
+        String first_name = input.nextLine();
+        System.out.print("Last Name: ");
+        String last_name = input.nextLine();
+        System.out.print("IC/PassportNumber: ");
+        String ic_passportnum = input.nextLine();
+        
+        String result = x.editProfile(account_id, password, first_name, last_name, ic_passportnum);
+        System.out.println(result);
+        account_menu();
     }
     
     public void account_menu() throws Exception{
@@ -189,8 +226,7 @@ public class system {
             }
           
             case 1:{
-                editAccount();
-                account_menu();
+                editProfile();
                 break;
             }
                 
@@ -331,10 +367,6 @@ public class system {
         x.deleteExec(usernamedel);
         TimeUnit.SECONDS.sleep(2);
         System.out.println("Account Deleted !\n");
-    }
-
-    private void editExec() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void listInven() throws Exception {

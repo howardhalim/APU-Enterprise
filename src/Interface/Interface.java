@@ -17,7 +17,8 @@ public interface Interface extends Remote {
      public int login (String username, String password) throws Exception;
      public int registerAccount(String username, String password) throws Exception;
      public boolean verifyLogin(int user_id,String validation) throws Exception;
-     public void editAccount(String username, String newusername, String password) throws Exception;
+     public String getAccountId(String username) throws Exception;
+     public String editProfile(int account_id, String password, String first_name, String last_name, String ic_passportnum) throws Exception;
      public void dataInput(String firstName, String lastName, String IC, String username, String password) throws Exception;
      public List<String> retreiveAccount(int id) throws Exception;
      public List<List<String>> listAllExec() throws Exception;

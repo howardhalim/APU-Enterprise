@@ -55,7 +55,7 @@ public class Server implements Interface {
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:E:\\Lecture\\0_Assignment\\Year 3\\DCOMS\\APU-Enterprise\\APUDatabase.db";
+            String url = "jdbc:sqlite:C:/Users/Asus/Desktop/DCOMS GIT/APUDatabase.db";
             con = DriverManager.getConnection(url);
 
         }
@@ -187,63 +187,35 @@ public class Server implements Interface {
         }
         return null;
     }
-
-    public void editAccount(String username, String newusername, String password) throws SQLException{
+     public String editProfile(int account_id, String password, String first_name, String last_name, String ic_passportnum) throws SQLException{
         Connection conn = null;
         Statement st = null; 
         ResultSet sqlres = null;
         PreparedStatement ps = null;
         
-        String sql = "SELECT * FROM account WHERE username = \""+username+"\" ";
         try {  
+            String sql = "SELECT * FROM account WHERE ic_passportnum = \""+ic_passportnum+"\" ";
             conn = this.connect();
             st  = conn.createStatement();
             sqlres = st.executeQuery(sql);
-            int id = sqlres.getInt("id");
-            if (!sqlres.next()) { System.out.println("User Not found"); return;}
+            if (sqlres.next()) { return "IC or Passport Unavailable";}
             
-        } catch (SQLException e) { System.out.println("2"+e.getMessage()); return;
+        } catch (SQLException e) { System.out.println(e.getMessage()); return "error";
         } finally {
-            if (conn != null) {
-                conn.close();
-            }
-            if (st != null) {
-                st.close();
-            }
-            if (sqlres != null) {
-                sqlres.close();
-            }
-        }
-
-        String sql2 = "SELECT * FROM account WHERE username = \""+ newusername+"\"";
-        //if username changed
-        if(!username.equals(newusername)){
-            try {
-                conn = this.connect();
-                st  = conn.createStatement();
-                sqlres = st.executeQuery(sql2);
-                if (sqlres.next()) { System.out.println("Error! Username not available"); return;}
-            } catch (SQLException e) { System.out.println("1"+e.getMessage()); return;
-            } finally {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
-                if (sqlres != null) {
-                    sqlres.close();
-                }
-            }
+            if (conn != null) {conn.close();}
+            if (st != null) {st.close();}
+            if (sqlres != null) {sqlres.close();}
         }
         
-        String sql3 = "UPDATE account SET username=\""+newusername+"\", password=\""+password+"\" WHERE username=\""+username+"\"";
+        String sql3 = "UPDATE account SET password=\""+password+"\", "+
+                "first_name= \""+first_name+"\", " +
+                "last_name= \""+last_name+"\", " +
+                "ic_passportnum= \""+ic_passportnum+"\" " +
+                " WHERE id= \""+account_id+"\" ";
         try {
             conn = this.connect();
             ps = conn.prepareStatement(sql3);
             ps.executeUpdate();
-            System.out.println("SUKSES");
-            return;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -254,8 +226,34 @@ public class Server implements Interface {
                 ps.close();
             }
         }
+        return "User profile updated";
     }
-    
+
+    public String getAccountId(String username) throws SQLException{
+        Connection conn = null;
+        Statement st = null; 
+        ResultSet sqlres = null;
+        PreparedStatement ps = null;
+        int account_id = -1;
+        
+        try {  
+            String sql = "SELECT * FROM account WHERE username = \""+username+"\" ";
+            conn = this.connect();
+            st  = conn.createStatement();
+            sqlres = st.executeQuery(sql);
+            if (!sqlres.next()) { return "User Not found";}
+            else { account_id = sqlres.getInt("id"); }
+            
+        } catch (SQLException e) { System.out.println(e.getMessage()); return "error";
+        } finally {
+            if (conn != null) {conn.close();}
+            if (st != null) {st.close();}
+            if (sqlres != null) {sqlres.close();}
+        }
+        
+        return Integer.toString(account_id);
+    }
+
     public List<List<String>> listAllExec() throws Exception{
         String sql = "SELECT * FROM account";
         List<List<String>> data = new ArrayList<>();
