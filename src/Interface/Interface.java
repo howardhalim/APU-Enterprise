@@ -19,4 +19,5 @@ public interface Interface extends Remote {
      public boolean verifyLogin(int user_id,String validation) throws Exception;
      public void dataInput(String firstName, String lastName, String IC, String username, String password) throws Exception;
      public List<String> retreiveAccount(int id) throws Exception;
+     public List<List<String>> listAllExec() throws Exception;
 }

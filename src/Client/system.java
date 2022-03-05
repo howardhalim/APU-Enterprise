@@ -12,11 +12,16 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -165,19 +170,22 @@ public class system {
         
         switch(ch){
             case 1:{
-                
+                editAccount();
                 break;
             }
                 
             case 2:{
+                storeNewInven();
                 break;
             }
                 
             case 3:{
+                listInven();
                 break;
             }
                 
             case 4:{
+                generateReport();
                 break;
             }
                 
@@ -188,6 +196,25 @@ public class system {
                 break;
             }
         }
+        
+    }
+    
+    public void storeNewInven(){
+        System.out.println("-------Inventory------");
+        System.out.print("Item Name: ");
+        String itemName = input.nextLine();
+        System.out.print("Brand: ");
+        String brand = input.nextLine();
+        System.out.print("Category: ");
+        String category = input.nextLine();
+        System.out.print("Stock: ");
+        String stock = input.nextLine();
+        System.out.println("Price: ");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();  
+        System.out.println(dtf.format(now)); 
+        
+        
         
     }
     
@@ -205,22 +232,32 @@ public class system {
         int ch = input.nextInt();
         switch(ch){
             case 1:{
+            try {
+                listAllExec();
                 
+            } catch (Exception ex) {
+                Logger.getLogger(system.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                admin_menu();
                 break;
             }
                 
             case 2:{
+                deleteExec();
                 break;
             }
                 
             case 3:{
+                editExec();
                 break;
             }
                 
             case 4:{
+                listInven();
                 break;
             }
             case 5:{
+                generateReport();
                 break;
             }    
             
@@ -231,5 +268,37 @@ public class system {
                 break;
             }
         }
+    }
+    public void listAllExec() throws Exception{
+        List<List<String>> data = x.listAllExec();
+        for(int i = 0;i<data.size();i++){
+            List<String> temp = data.get(i);
+            System.out.println("-------------------------");
+            System.out.println("Name: "+temp.get(0)+" "+temp.get(1));
+            System.out.println("IC/Passport: "+temp.get(2));
+            
+        }
+        System.out.println("-------------------------");
+    }
+
+    private void deleteExec() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void editExec() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listInven() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void generateReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    private void editAccount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

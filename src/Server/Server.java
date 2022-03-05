@@ -186,6 +186,35 @@ public class Server implements Interface {
         }
         return null;
     }
+    
+    public List<List<String>> listAllExec() throws Exception{
+        String sql = "SELECT * FROM account";
+        List<List<String>> data = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                
+                int x = rs.getInt("id");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String ic = rs.getString("ic_passportnum");
+                
+                List<String> temp = new ArrayList<>();
+                temp.add(first_name);
+                temp.add(last_name);
+                temp.add(ic);
+                data.add(temp);
+            }
+              
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
 
 
 }
