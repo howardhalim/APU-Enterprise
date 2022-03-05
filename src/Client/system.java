@@ -27,22 +27,22 @@ public class system {
         x = (Interface) Naming.lookup("rmi://localhost:1098/APUServer");
         system_start();
     }
-    
+
     public void system_start() throws Exception{
-        
+
         menu();
-   
+
     }
     public void menu() throws Exception{
         System.out.println("\n!!APU Enterprise!!");
-        
+
         System.out.println("1. Register");
         System.out.println("2. Login\n");
-        
+
         System.out.print("Choose: ");
-        
+
         int inp = parseInt(input.nextLine());
-        
+
         if(inp == 1){
             register();
         }
@@ -57,24 +57,24 @@ public class system {
         System.out.println("\n!!ACCOUNT REGISTRATION!!");
         System.out.print("Username: ");
         String username = input.nextLine();
-        
+
         System.out.print("Password: ");
         String password = input.nextLine();
-        
+
         String msg = x.registerAccount(username,password);
         System.out.println(msg);
-        
+
         menu();
     }
     public void login() throws Exception{
-        
+
         System.out.println("\n!!LOGIN PAGE !!");
         System.out.print("Username: ");
         String username = input.nextLine();
-        
+
         System.out.print("Password: ");
         String password = input.nextLine();
-        
+
         int user_id = x.login(username, password);
         if(user_id >=0){
             System.out.print("IC/Passport: ");
@@ -88,11 +88,11 @@ public class system {
                 System.out.println("Validation Fail! Please Retry");
                 menu();
             }
-        
+
         }
         else{
             System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
             menu();
-        } 
+        }
     }
 }
