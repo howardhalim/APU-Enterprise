@@ -6,6 +6,7 @@
 package Client;
 
 import Interface.Interface;
+import java.io.FileOutputStream;
 import static java.lang.Integer.parseInt;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -150,8 +151,6 @@ public class system {
     }
     
     public void editAccount() throws Exception{
-
-        String buggy = input.nextLine();
         System.out.print("Username: ");
         String username = input.nextLine();
         System.out.print("New Username: ");
@@ -358,7 +357,18 @@ public class system {
         System.out.println("### Done ###\n");
     }
 
-    private void generateReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void generateReport() throws Exception {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("iTextTable.pdf"));
+        generatePDF pdf = new generatePDF();
+        document.open();
+
+        PdfPTable table = new PdfPTable(4);
+        pdf.addTableHeader(table);
+        pdf.addRows(table);
+        pdf.addCustomRows(table);
+
+        document.add(table);
+        document.close();
     }
 }
