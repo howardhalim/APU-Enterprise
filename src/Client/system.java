@@ -77,9 +77,11 @@ public class system {
         
         int user_id = x.login(username, password);
         if(user_id >=0){
-            System.out.println("LOGIN SUCCESSFUL");
-            boolean check = x.verifyLogin(user_id);
+            System.out.print("IC/Passport: ");
+            String validation = input.nextLine();
+            boolean check = x.verifyLogin(user_id,validation);
             if(check){
+                System.out.println("LOGIN SUCCESSFUL");
                 //go_next
             }
             else{

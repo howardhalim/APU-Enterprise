@@ -90,8 +90,27 @@ public class Server implements Interface {
         return -1;
     }
     
-    public boolean verifyLogin(int user_id){
-        return true;
+    public boolean verifyLogin(int user_id, String validation){
+        String sql = "SELECT * FROM sales_executive";
+        boolean found = false;
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String valid = rs.getString("ic_passportnum");
+                
+                if(id == user_id && validation.equals(valid)){
+                    found = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return found;
     }
     
     public String registerAccount(String username, String password){
