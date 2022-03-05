@@ -55,7 +55,7 @@ public class Server implements Interface {
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:E:\\Lecture\\0_Assignment\\Year 3\\DCOMS\\APU-Enterprise\\APUDatabase.db";
+            String url = "jdbc:sqlite:C:/Users/Asus/Desktop/DCOMS GIT/APUDatabase.db";
             con = DriverManager.getConnection(url);
 
         }
@@ -194,19 +194,6 @@ public class Server implements Interface {
         PreparedStatement ps = null;
         
         try {  
-            String sql = "SELECT * FROM account WHERE id = \""+account_id+"\" ";
-            conn = this.connect();
-            st  = conn.createStatement();
-            sqlres = st.executeQuery(sql);
-            if (!sqlres.next()) { return "User Not found";}
-            
-        } catch (SQLException e) { System.out.println(e.getMessage()); return "error";
-        } finally {
-            if (conn != null) {conn.close();}
-            if (st != null) {st.close();}
-            if (sqlres != null) {sqlres.close();}
-        }
-        try {  
             String sql = "SELECT * FROM account WHERE ic_passportnum = \""+ic_passportnum+"\" ";
             conn = this.connect();
             st  = conn.createStatement();
@@ -242,12 +229,12 @@ public class Server implements Interface {
         return "User profile updated";
     }
 
-    public String editExec(String username, String password, String first_name, String last_name, String ic_passportnum) throws SQLException{
+    public String getAccountId(String username) throws SQLException{
         Connection conn = null;
         Statement st = null; 
         ResultSet sqlres = null;
         PreparedStatement ps = null;
-        int user_id = -1;
+        int account_id = -1;
         
         try {  
             String sql = "SELECT * FROM account WHERE username = \""+username+"\" ";
@@ -255,7 +242,7 @@ public class Server implements Interface {
             st  = conn.createStatement();
             sqlres = st.executeQuery(sql);
             if (!sqlres.next()) { return "User Not found";}
-            else { user_id = sqlres.getInt("id"); }
+            else { account_id = sqlres.getInt("id"); }
             
         } catch (SQLException e) { System.out.println(e.getMessage()); return "error";
         } finally {
@@ -264,7 +251,7 @@ public class Server implements Interface {
             if (sqlres != null) {sqlres.close();}
         }
         
-        return editProfile(user_id, password, first_name, last_name, ic_passportnum);
+        return Integer.toString(account_id);
     }
 
     public List<List<String>> listAllExec() throws Exception{

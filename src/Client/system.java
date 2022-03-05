@@ -154,17 +154,24 @@ public class system {
         
         System.out.print("Username: ");
         String username = input.nextLine();
-        System.out.print("Password: ");
-        String password = input.nextLine();
-        System.out.print("First Name: ");
-        String first_name = input.nextLine();
-        System.out.print("Last Name: ");
-        String last_name = input.nextLine();
-        System.out.print("IC/PassportNumber: ");
-        String ic_passportnum = input.nextLine();
-        
-        String result = x.editExec(username, password, first_name, last_name, ic_passportnum);
-        System.out.println(result);
+        int target_account_id = -1;
+        String unparsed_target_account_id = x.getAccountId(username);
+        try {
+            target_account_id = parseInt(unparsed_target_account_id);
+            System.out.print("Password: ");
+            String password = input.nextLine();
+            System.out.print("First Name: ");
+            String first_name = input.nextLine();
+            System.out.print("Last Name: ");
+            String last_name = input.nextLine();
+            System.out.print("IC/PassportNumber: ");
+            String ic_passportnum = input.nextLine();
+
+            String result = x.editProfile(target_account_id, password, first_name, last_name, ic_passportnum);
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println(unparsed_target_account_id);
+        }
         admin_menu();
     }
     
