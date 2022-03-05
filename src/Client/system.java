@@ -239,6 +239,7 @@ public class system {
         System.out.print("Choice: ");
         
         int ch = input.nextInt();
+        String dum = input.nextLine();
         switch(ch){
             case 1:{
             try {
