@@ -356,10 +356,6 @@ public class system {
         System.out.println("Account Deleted !\n");
     }
 
-    private void editExec() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private void listInven() throws Exception {
         List<List<String>> data = x.listInven();
         if (data.isEmpty()){
