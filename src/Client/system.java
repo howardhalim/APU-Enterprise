@@ -167,7 +167,7 @@ public class system {
         System.out.print("Choice: ");
         
         int ch = input.nextInt();
-        
+        String dum = input.nextLine();
         switch(ch){
             case 1:{
                 editAccount();
@@ -199,7 +199,7 @@ public class system {
         
     }
     
-    public void storeNewInven(){
+    public void storeNewInven() throws Exception{
         System.out.println("-------Inventory------");
         System.out.print("Item Name: ");
         String itemName = input.nextLine();
@@ -208,13 +208,22 @@ public class system {
         System.out.print("Category: ");
         String category = input.nextLine();
         System.out.print("Stock: ");
-        String stock = input.nextLine();
-        System.out.println("Price: ");
+        int stock = input.nextInt();
+        System.out.print("Price: ");
+        int price = input.nextInt();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
-        System.out.println(dtf.format(now)); 
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+        System.out.println("Time: "+dtf.format(now)); 
         
+        x.storeNew(itemName,brand,category,stock,price,date);
+        System.out.println("Storing Item...");
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("----------------------");
+        System.out.println("Item Stored!");
+        System.out.println("----------------------");
         
+        account_menu();
         
     }
     

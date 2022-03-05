@@ -142,7 +142,7 @@ public class Server implements Interface {
     public void dataInput(String firstName, String lastName, String IC, String username, String password){
         String sql = "INSERT INTO account(first_name, last_name, ic_passportnum,username,password) VALUES(?,?,?,?,?)";
           
-          try (Connection conn = this.connect();
+         try (Connection conn = this.connect();
                PreparedStatement ps = conn.prepareStatement(sql)) {
               
                ps.setString(1,firstName);
@@ -214,6 +214,26 @@ public class Server implements Interface {
             System.out.println(e.getMessage());
         }
         return data;
+    }
+    
+    public void storeNew(String itemName, String brand, String category, int stock, int price, String date) throws Exception{
+        String sql = "INSERT INTO inventory(item_name, brand, category, stock, price, date_stored) VALUES(?,?,?,?,?,?)";
+         try (Connection conn = this.connect();
+               PreparedStatement ps = conn.prepareStatement(sql)) {
+              
+               ps.setString(1,itemName);
+               ps.setString(2,brand);
+               ps.setString(3,category);
+               ps.setInt(4,stock);
+               ps.setInt(5,price);
+               ps.setString(6, date);
+               ps.executeUpdate();
+               
+          } catch (SQLException e) {
+              System.out.println(e.getMessage());
+              
+        }
+        
     }
 
 
