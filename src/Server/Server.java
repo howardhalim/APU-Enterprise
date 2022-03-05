@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,7 +55,7 @@ public class Server implements Interface {
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:APUDatabase.db";
+            String url = "jdbc:sqlite:C:/Users/Asus/Desktop/DCOMS GIT/APUDatabase.db";
             con = DriverManager.getConnection(url);
 
         }
@@ -79,7 +81,7 @@ public class Server implements Interface {
                 String user = rs.getString("username");
                 String pass = rs.getString("password");
                 int id = rs.getInt("id");
-                System.out.println(user + password);
+                //System.out.println(user + password);
                 if(user.equals(username) && pass.equals(password)){
                     System.out.println("Login Successfull");
                     return id;
@@ -118,7 +120,6 @@ public class Server implements Interface {
     
     public int registerAccount(String username, String password){
         String sql = "SELECT * FROM account";
-                
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -186,6 +187,74 @@ public class Server implements Interface {
         }
         return null;
     }
+
+    public void editAccount(String username, String newusername, String password) throws SQLException{
+        Connection conn = null;
+        Statement st = null; 
+        ResultSet sqlres = null;
+        PreparedStatement ps = null;
+        
+        String sql = "SELECT * FROM account WHERE username = \""+username+"\" ";
+        try {  
+            conn = this.connect();
+            st  = conn.createStatement();
+            sqlres = st.executeQuery(sql);
+            int id = sqlres.getInt("id");
+            if (!sqlres.next()) { System.out.println("User Not found"); return;}
+            
+        } catch (SQLException e) { System.out.println("2"+e.getMessage()); return;
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (sqlres != null) {
+                sqlres.close();
+            }
+        }
+
+        String sql2 = "SELECT * FROM account WHERE username = \""+ newusername+"\"";
+        //if username changed
+        if(!username.equals(newusername)){
+            try {
+                conn = this.connect();
+                st  = conn.createStatement();
+                sqlres = st.executeQuery(sql2);
+                if (sqlres.next()) { System.out.println("Error! Username not available"); return;}
+            } catch (SQLException e) { System.out.println("1"+e.getMessage()); return;
+            } finally {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (sqlres != null) {
+                    sqlres.close();
+                }
+            }
+        }
+        
+        String sql3 = "UPDATE account SET username=\""+newusername+"\", password=\""+password+"\" WHERE username=\""+username+"\"";
+        try {
+            conn = this.connect();
+            ps = conn.prepareStatement(sql3);
+            ps.executeUpdate();
+            System.out.println("SUKSES");
+            return;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
     
     public List<List<String>> listAllExec() throws Exception{
         String sql = "SELECT * FROM account";
@@ -246,3 +315,4 @@ public class Server implements Interface {
         }
     }
 }
+

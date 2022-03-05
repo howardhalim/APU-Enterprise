@@ -106,7 +106,6 @@ public class system {
         menu();
     }
     public void login() throws Exception{
-
         System.out.println("\n!!LOGIN PAGE !!");
         System.out.print("Username: ");
         String username = input.nextLine();
@@ -120,13 +119,13 @@ public class system {
             System.out.print("IC/Passport: ");
             String validation = input.nextLine();
             System.out.println("Verifying...");
-            TimeUnit.SECONDS.sleep(3);
+            //TimeUnit.SECONDS.sleep(3);
             
             boolean check = x.verifyLogin(user_id,validation);
             if(check){
                 account_id = user_id;
                 System.out.println("Loging in...");
-                TimeUnit.SECONDS.sleep(1);
+                //TimeUnit.SECONDS.sleep(1);
                 account_menu();
                 //go_next
             }
@@ -148,7 +147,18 @@ public class system {
             menu();
         }
     }
-    
+    public void editAccount() throws Exception{
+
+        String buggy = input.nextLine();
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        System.out.print("New Username: ");
+        String newusername = input.nextLine();
+        System.out.print("Password: ");
+        String password = input.nextLine();
+
+        x.editAccount(username, newusername, password);
+    }
     public void account_menu() throws Exception{
         List<String>data = x.retreiveAccount(account_id);
         if(data == null){
@@ -308,11 +318,6 @@ public class system {
     }
 
     private void generateReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    private void editAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
