@@ -115,8 +115,7 @@ public class Server implements Interface {
 
     public String registerAccount(String username, String password){
         String sql = "SELECT * FROM account";
-
-
+        
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -152,5 +151,44 @@ public class Server implements Interface {
         }
     }
 
+     public String editAccount(String username, String newusername, String password){
+        String sql = "SELECT * FROM account WHERE username = "+username;
+        String sql2 = "SELECT * FROM sales_executive WHERE ";
 
+        try (Connection conn = this.connect();
+            Statement st  = conn.createStatement();
+            ResultSet res    = st.executeQuery(sql)){
+            
+            //if username changed
+            if!(username.equals(newusername)){
+                //Traverse Res
+                while (res.next()) {
+                    String newusername = res.getString("newusername");
+
+                    if(user.equals(username)){
+                        return "Error! New username are not available\n";
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("Yes");
+        }
+        /*
+        sql = "INSERT INTO account(username,password) VALUES(?,?)";
+
+        try (Connection conn = this.connect();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1,username);
+            ps.setString(2,password);
+            ps.executeUpdate();
+            return "Registration Successfull\n";
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return "ERROR";
+        }
+        */
+    }
 }
