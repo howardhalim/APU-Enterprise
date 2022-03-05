@@ -143,7 +143,7 @@ public class Server implements Interface {
     public void dataInput(String firstName, String lastName, String IC, String username, String password){
         String sql = "INSERT INTO account(first_name, last_name, ic_passportnum,username,password) VALUES(?,?,?,?,?)";
           
-          try (Connection conn = this.connect();
+         try (Connection conn = this.connect();
                PreparedStatement ps = conn.prepareStatement(sql)) {
               
                ps.setString(1,firstName);
@@ -253,6 +253,63 @@ public class Server implements Interface {
             if (ps != null) {
                 ps.close();
             }
+    
+    public List<List<String>> listAllExec() throws Exception{
+        String sql = "SELECT * FROM account";
+        List<List<String>> data = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                
+                int x = rs.getInt("id");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String ic = rs.getString("ic_passportnum");
+                
+                List<String> temp = new ArrayList<>();
+                temp.add(first_name);
+                temp.add(last_name);
+                temp.add(ic);
+                data.add(temp);
+            }
+              
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
+    
+    public void storeNew(String itemName, String brand, String category, int stock, int price, String date) throws Exception{
+        String sql = "INSERT INTO inventory(item_name, brand, category, stock, price, date_stored) VALUES(?,?,?,?,?,?)";
+         try (Connection conn = this.connect();
+               PreparedStatement ps = conn.prepareStatement(sql)) {
+              
+               ps.setString(1,itemName);
+               ps.setString(2,brand);
+               ps.setString(3,category);
+               ps.setInt(4,stock);
+               ps.setInt(5,price);
+               ps.setString(6, date);
+               ps.executeUpdate();
+               
+          } catch (SQLException e) {
+              System.out.println(e.getMessage());
+        }   
+    }
+    
+    public void deleteExec(String del){
+        String sql = "DELETE FROM account WHERE username = ?";
+         try (Connection conn = this.connect();
+                PreparedStatement ps = conn.prepareStatement(sql)){
+               ps.setString(1, del);
+               ps.executeUpdate();
+               
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
         }
     }
 }

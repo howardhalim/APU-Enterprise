@@ -12,11 +12,16 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -172,7 +177,7 @@ public class system {
         System.out.print("Choice: ");
         
         int ch = input.nextInt();
-        
+        String dum = input.nextLine();
         switch(ch){
             case 1:{
                 editAccount();
@@ -180,14 +185,17 @@ public class system {
             }
                 
             case 2:{
+                storeNewInven();
                 break;
             }
                 
             case 3:{
+                listInven();
                 break;
             }
                 
             case 4:{
+                generateReport();
                 break;
             }
                 
@@ -201,7 +209,35 @@ public class system {
         
     }
     
-    public void admin_menu(){
+    public void storeNewInven() throws Exception{
+        System.out.println("-------Inventory------");
+        System.out.print("Item Name: ");
+        String itemName = input.nextLine();
+        System.out.print("Brand: ");
+        String brand = input.nextLine();
+        System.out.print("Category: ");
+        String category = input.nextLine();
+        System.out.print("Stock: ");
+        int stock = input.nextInt();
+        System.out.print("Price: ");
+        int price = input.nextInt();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+        System.out.println("Time: "+dtf.format(now)); 
+        
+        x.storeNew(itemName,brand,category,stock,price,date);
+        System.out.println("Storing Item...");
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("----------------------");
+        System.out.println("Item Stored!");
+        System.out.println("----------------------");
+        
+        account_menu();
+        
+    }
+    
+    public void admin_menu() throws Exception{
         System.out.println("-------------------------------");
         System.out.println("----------ADMIN-PAGE-----------");
         System.out.println("1. List All Executive");
@@ -215,22 +251,32 @@ public class system {
         int ch = input.nextInt();
         switch(ch){
             case 1:{
+            try {
+                listAllExec();
                 
+            } catch (Exception ex) {
+                Logger.getLogger(system.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                admin_menu();
                 break;
             }
                 
             case 2:{
+                deleteExec();
                 break;
             }
                 
             case 3:{
+                editExec();
                 break;
             }
                 
             case 4:{
+                listInven();
                 break;
             }
             case 5:{
+                generateReport();
                 break;
             }    
             
@@ -241,5 +287,41 @@ public class system {
                 break;
             }
         }
+    }
+    public void listAllExec() throws Exception{
+        List<List<String>> data = x.listAllExec();
+        for(int i = 0;i<data.size();i++){
+            List<String> temp = data.get(i);
+            System.out.println("-------------------------");
+            System.out.println("Name: "+temp.get(0)+" "+temp.get(1));
+            System.out.println("IC/Passport: "+temp.get(2));
+            
+        }
+        System.out.println("-------------------------");
+    }
+    
+    public void deleteExec() throws Exception {
+        System.out.println("Enter username to be deleted :");
+        String usernamedel = input.nextLine();
+        x.deleteExec(usernamedel);
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("Account Deleted !");
+    }
+
+    private void editExec() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listInven() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void generateReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    private void editAccount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

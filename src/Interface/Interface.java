@@ -20,4 +20,7 @@ public interface Interface extends Remote {
      public void editAccount(String username, String newusername, String password) throws Exception;
      public void dataInput(String firstName, String lastName, String IC, String username, String password) throws Exception;
      public List<String> retreiveAccount(int id) throws Exception;
+     public List<List<String>> listAllExec() throws Exception;
+     public void storeNew(String itemName, String brand, String category, int stock, int price, String date) throws Exception;
+     public void deleteExec(String del) throws Exception;
 }
