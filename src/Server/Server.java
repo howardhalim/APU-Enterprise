@@ -18,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -91,7 +93,7 @@ public class Server implements Interface {
     }
     
     public boolean verifyLogin(int user_id, String validation){
-        String sql = "SELECT * FROM sales_executive";
+        String sql = "SELECT * FROM account";
         boolean found = false;
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -113,10 +115,10 @@ public class Server implements Interface {
         return found;
     }
     
-    public String registerAccount(String username, String password){
+    
+    public int registerAccount(String username, String password){
         String sql = "SELECT * FROM account";
-        
-        
+                
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -125,31 +127,64 @@ public class Server implements Interface {
             while (rs.next()) {
                 String user = rs.getString("username");
                 String pass = rs.getString("password");
-                
-                
+
                 if(user.equals(username)){
-                    return "Username has existed, Please Choose Another Username\n";
-                   
+                    return 1;
                 }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         
+        return 0;
         
-        sql = "INSERT INTO account(username,password) VALUES(?,?)";
+    }
+    public void dataInput(String firstName, String lastName, String IC, String username, String password){
+        String sql = "INSERT INTO account(first_name, last_name, ic_passportnum,username,password) VALUES(?,?,?,?,?)";
           
           try (Connection conn = this.connect();
                PreparedStatement ps = conn.prepareStatement(sql)) {
               
-               ps.setString(1,username);
-               ps.setString(2,password);
+               ps.setString(1,firstName);
+               ps.setString(2,lastName);
+               ps.setString(3,IC);
+               ps.setString(4,username);
+               ps.setString(5,password);
                ps.executeUpdate();
-              return "Registration Successfull\n";
+             
           } catch (SQLException e) {
               System.out.println(e.getMessage());
-              return "ERROR";
+              
         }
+          
+        
+    }
+    
+    public List<String> retreiveAccount(int id){
+        String sql = "SELECT * FROM account";
+        List<String> data = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                int x = rs.getInt("id");
+                if(x==id){
+                     String first_name = rs.getString("first_name");
+                     String last_name = rs.getString("last_name");
+                     String ic = rs.getString("ic_passportnum");
+                     data.add(first_name);
+                     data.add(last_name);
+                     data.add(ic);
+                     return data;
+                }
+               
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
     
     
