@@ -6,6 +6,7 @@
 package Client;
 
 import Interface.Interface;
+import static java.lang.Integer.parseInt;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -28,16 +29,41 @@ public class system {
     }
     
     public void system_start() throws Exception{
-        register();   
+        
+        menu();
+   
     }
-    public void register()  throws Exception{
-        System.out.println("Username: ");
-        String username = input.next();
-        System.out.println("Password: ");
-        String password = input.next();
+    public void menu() throws Exception{
+        System.out.println("!!APU Enterprise!!");
+        
+        System.out.println("1. Register");
+        System.out.println("2. Login\n");
+        
+        System.out.print("Choose: ");
+        
+        int inp = parseInt(input.nextLine());
+        
+        if(inp == 1){
+            register();
+        }
+        else if(inp == 2){
+            login();
+        }
+        else{
+            System.out.println("Wrong Choice");
+        }
+    }
+    public void register() throws Exception{
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        
+        System.out.print("Password: ");
+        String password = input.nextLine();
         
         x.registerAccount(username,password);
-        System.out.println("done bos");
+        
     }
-    
+    public void login() throws Exception{
+        
+    }
 }
