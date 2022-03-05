@@ -68,8 +68,12 @@ public class system {
         System.out.println("2. Login\n");
 
         System.out.print("Choose: ");
-
-        int inp = parseInt(input.nextLine());
+        
+        int inp = -1;
+        try{
+            inp = parseInt(input.nextLine());    
+        } catch (Exception e) {}
+        
 
         if(inp == 1){
             register();
@@ -79,6 +83,7 @@ public class system {
         }
         else{
             System.out.println("Wrong Choice");
+            menu();
         }
     }
     
@@ -217,8 +222,12 @@ public class system {
         System.out.println("-------------------------------");
         System.out.print("Choice: ");
         
-        int ch = input.nextInt();
-        String dum = input.nextLine();
+        int ch = -1;
+        try{
+            ch = parseInt(input.nextLine());
+            String dum = input.nextLine();
+        } catch (Exception e) {}
+        
         switch(ch){
             case 0:{
                 System.out.println(" >>> Thank you for using our service! <<< ");
@@ -296,8 +305,12 @@ public class system {
         System.out.println("-------------------------------");
         System.out.print("Choice: ");
         
-        int ch = input.nextInt();
-        String dum = input.nextLine();
+        int ch = -1;
+        try{
+            ch = parseInt(input.nextLine());   
+            String dum = input.nextLine();
+        } catch (Exception e) {}
+        
         switch(ch){
             case 0:{
                 System.out.println(" >>> Thank you for using our service! <<< ");
