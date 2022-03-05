@@ -93,14 +93,4 @@ public class system {
             menu();
         } 
     }
-    
-    public void test() {
-        System.out.print("testing109: ");
-        System.out.print("testing2: ");
-    }
-    
-    public void tes2() {
-        System.out.print("testing231: ");
-        System.out.print("testing2: ");
-    }
 }
