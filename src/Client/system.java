@@ -91,9 +91,11 @@ public class system {
         else{
             System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
             menu();
-        }
-        
-        
-        
+        } 
+    }
+    
+    public void test() {
+        System.out.print("testing: ");
+        System.out.print("testing2: ");
     }
 }
