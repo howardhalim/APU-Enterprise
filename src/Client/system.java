@@ -34,7 +34,7 @@ public class system {
    
     }
     public void menu() throws Exception{
-        System.out.println("!!APU Enterprise!!");
+        System.out.println("\n!!APU Enterprise!!");
         
         System.out.println("1. Register");
         System.out.println("2. Login\n");
@@ -54,16 +54,46 @@ public class system {
         }
     }
     public void register() throws Exception{
+        System.out.println("\n!!ACCOUNT REGISTRATION!!");
         System.out.print("Username: ");
         String username = input.nextLine();
         
         System.out.print("Password: ");
         String password = input.nextLine();
         
-        x.registerAccount(username,password);
+        String msg = x.registerAccount(username,password);
+        System.out.println(msg);
         
+        menu();
     }
     public void login() throws Exception{
+        
+        System.out.println("\n!!LOGIN PAGE !!");
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        
+        System.out.print("Password: ");
+        String password = input.nextLine();
+        
+        int user_id = x.login(username, password);
+        if(user_id >=0){
+            System.out.println("LOGIN SUCCESSFUL");
+            boolean check = x.verifyLogin(user_id);
+            if(check){
+                //go_next
+            }
+            else{
+                System.out.println("Validation Fail! Please Retry");
+                menu();
+            }
+        
+        }
+        else{
+            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
+            menu();
+        }
+        
+        
         
     }
 }

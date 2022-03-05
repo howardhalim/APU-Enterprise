@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
  * @author Asus
  */
 public interface Interface extends Remote {
-     public boolean login (String username, String password) throws Exception;
-     public void registerAccount(String username, String password) throws Exception;
+     public int login (String username, String password) throws Exception;
+     public String registerAccount(String username, String password) throws Exception;
+     public boolean verifyLogin(int user_id) throws Exception;
 }

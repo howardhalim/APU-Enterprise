@@ -15,7 +15,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -48,7 +50,8 @@ public class Server implements Interface {
        Connection con = null;
         try
         {
-            String url = "jdbc:sqlite:../../APUDatabase.db";
+            //change to appropriate directory
+            String url = "jdbc:sqlite:D:\\DCOMS\\APU-Enterprise\\APUDatabase.db";
             con = DriverManager.getConnection(url);
             
         }
@@ -58,15 +61,64 @@ public class Server implements Interface {
         }
         return con;
     }
-    public boolean login(String username, String password){
-        if("aa".equals(username) && "aa".equals(password)){
-            return true;
+    public int login(String username, String password){
+        if(username.equals("admin") && password.equals("admin")){
+            return 0;
         }
-        return false;
+        String sql = "SELECT * FROM account";
+        
+        
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                String user = rs.getString("username");
+                String pass = rs.getString("password");
+                int id = rs.getInt("id");
+                System.out.println(user + password);
+                if(user.equals(username) && pass.equals(password)){
+                    System.out.println("Login Successfull");
+                    return id;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return -1;
     }
     
-    public void registerAccount(String username, String password){
-        String sql = "INSERT INTO account(username,password) VALUES(?,?)";
+    public boolean verifyLogin(int user_id){
+        return true;
+    }
+    
+    public String registerAccount(String username, String password){
+        String sql = "SELECT * FROM account";
+        
+        
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                String user = rs.getString("username");
+                String pass = rs.getString("password");
+                
+                
+                if(user.equals(username)){
+                    return "Username has existed, Please Choose Another Username\n";
+                   
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        
+        sql = "INSERT INTO account(username,password) VALUES(?,?)";
           
           try (Connection conn = this.connect();
                PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -74,9 +126,10 @@ public class Server implements Interface {
                ps.setString(1,username);
                ps.setString(2,password);
                ps.executeUpdate();
-              System.out.println("REGISTERED");
+              return "Registration Successfull\n";
           } catch (SQLException e) {
               System.out.println(e.getMessage());
+              return "ERROR";
         }
     }
     
