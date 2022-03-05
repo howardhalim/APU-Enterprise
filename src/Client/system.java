@@ -167,7 +167,7 @@ public class system {
         System.out.print("Choice: ");
         
         int ch = input.nextInt();
-        
+        String dum = input.nextLine();
         switch(ch){
             case 1:{
                 editAccount();
@@ -199,7 +199,7 @@ public class system {
         
     }
     
-    public void storeNewInven(){
+    public void storeNewInven() throws Exception{
         System.out.println("-------Inventory------");
         System.out.print("Item Name: ");
         String itemName = input.nextLine();
@@ -208,17 +208,26 @@ public class system {
         System.out.print("Category: ");
         String category = input.nextLine();
         System.out.print("Stock: ");
-        String stock = input.nextLine();
-        System.out.println("Price: ");
+        int stock = input.nextInt();
+        System.out.print("Price: ");
+        int price = input.nextInt();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
-        System.out.println(dtf.format(now)); 
+        LocalDateTime now = LocalDateTime.now();
+        String date = dtf.format(now);
+        System.out.println("Time: "+dtf.format(now)); 
         
+        x.storeNew(itemName,brand,category,stock,price,date);
+        System.out.println("Storing Item...");
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("----------------------");
+        System.out.println("Item Stored!");
+        System.out.println("----------------------");
         
+        account_menu();
         
     }
     
-    public void admin_menu(){
+    public void admin_menu() throws Exception{
         System.out.println("-------------------------------");
         System.out.println("----------ADMIN-PAGE-----------");
         System.out.println("1. List All Executive");
@@ -280,9 +289,13 @@ public class system {
         }
         System.out.println("-------------------------");
     }
-
-    private void deleteExec() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public void deleteExec() throws Exception {
+        System.out.println("Enter username to be deleted :");
+        String usernamedel = input.nextLine();
+        x.deleteExec(usernamedel);
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("Account Deleted !");
     }
 
     private void editExec() {
