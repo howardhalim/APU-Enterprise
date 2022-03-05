@@ -48,7 +48,7 @@ public class Server implements Interface {
        Connection con = null;
         try
         {
-            String url = "jdbc:sqlite:\\D:\\DCOMS\\APU-Enterprise\\APUDatabase.db";
+            String url = "jdbc:sqlite:../../APUDatabase.db";
             con = DriverManager.getConnection(url);
             
         }
