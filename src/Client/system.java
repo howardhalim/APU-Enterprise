@@ -91,7 +91,7 @@ public class system {
 
         }
         else{
-            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
+            System.out.println("LOGIN FAIL IDIH, USERNAME/PASSWORD IS WRONG");
             menu();
         }
     }
