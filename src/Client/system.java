@@ -143,8 +143,7 @@ public class system {
            admin_menu();
         }
         else{
-            System.out.println("LOGIN SALAH, USERNAME/PASSWORD IS WRONG");
-            System.out.println("LOGIN FAIL IDIH, USERNAME/PASSWORD IS WRONG");
+            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
             menu();
         }
     }
@@ -299,7 +298,7 @@ public class system {
     }
 
     private void listInven() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private void generateReport() {
