@@ -55,7 +55,7 @@ public class Server implements Interface {
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:C:/Users/Asus/Desktop/DCOMS GIT/APUDatabase.db";
+            String url = "jdbc:sqlite:E:\\Lecture\\0_Assignment\\Year 3\\DCOMS\\APU-Enterprise\\APUDatabase.db";
             con = DriverManager.getConnection(url);
 
         }

@@ -351,7 +351,6 @@ public class system {
                 break;
             }    
             
-                
             default: {
                 System.out.println("Choice is Unavailable!\nPlease Try Again");
                 admin_menu();
