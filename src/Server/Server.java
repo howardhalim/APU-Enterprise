@@ -244,6 +244,5 @@ public class Server implements Interface {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-                
     }
 }
