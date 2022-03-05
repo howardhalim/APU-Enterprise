@@ -1,3 +1,4 @@
-#Ignore Build
+.idea
 /build
 /dist
+/nbproject

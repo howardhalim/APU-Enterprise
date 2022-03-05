@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="DCOMS_Assignment">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/DCOMS_Assignment.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
