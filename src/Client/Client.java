@@ -14,8 +14,6 @@ import java.rmi.RemoteException;
  * @author Asus
  */
 public class Client {
-    
-    
     public static void main(String args[]) throws RemoteException, NotBoundException, MalformedURLException, Exception {
          system newsystem = new system();
         

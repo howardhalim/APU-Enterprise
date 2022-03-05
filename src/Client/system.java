@@ -147,18 +147,44 @@ public class system {
             menu();
         }
     }
-    public void editAccount() throws Exception{
-
-        String buggy = input.nextLine();
+    public void editExec() throws Exception{
+        System.out.println("-------------------------------");
+        System.out.println("---------EDIT-ACCOUNT----------");
+        
         System.out.print("Username: ");
         String username = input.nextLine();
-        System.out.print("New Username: ");
-        String newusername = input.nextLine();
         System.out.print("Password: ");
         String password = input.nextLine();
-
-        x.editAccount(username, newusername, password);
+        System.out.print("First Name: ");
+        String first_name = input.nextLine();
+        System.out.print("Last Name: ");
+        String last_name = input.nextLine();
+        System.out.print("IC/PassportNumber: ");
+        String ic_passportnum = input.nextLine();
+        
+        String result = x.editExec(username, password, first_name, last_name, ic_passportnum);
+        System.out.println(result);
+        admin_menu();
     }
+    
+    public void editProfile() throws Exception{
+        System.out.println("-------------------------------");
+        System.out.println("---------EDIT-PROFILE----------");
+        
+        System.out.print("Password: ");
+        String password = input.nextLine();
+        System.out.print("First Name: ");
+        String first_name = input.nextLine();
+        System.out.print("Last Name: ");
+        String last_name = input.nextLine();
+        System.out.print("IC/PassportNumber: ");
+        String ic_passportnum = input.nextLine();
+        
+        String result = x.editProfile(account_id, password, first_name, last_name, ic_passportnum);
+        System.out.println(result);
+        account_menu();
+    }
+    
     public void account_menu() throws Exception{
         List<String>data = x.retreiveAccount(account_id);
         if(data == null){
@@ -180,7 +206,7 @@ public class system {
         String dum = input.nextLine();
         switch(ch){
             case 1:{
-                editAccount();
+                editProfile();
                 break;
             }
                 
@@ -248,7 +274,8 @@ public class system {
         System.out.println("-------------------------------");
         System.out.print("Choice: ");
         
-        int ch = input.nextInt();
+        int ch = 1;
+        
         switch(ch){
             case 1:{
             try {
@@ -308,20 +335,11 @@ public class system {
         System.out.println("Account Deleted !");
     }
 
-    private void editExec() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private void listInven() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void generateReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    private void editAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
