@@ -46,20 +46,20 @@ public class system {
 //        }
 //    }
     public void system_start() throws Exception{
-        
+
         menu();
-   
+
     }
     public void menu() throws Exception{
         System.out.println("\n!!APU Enterprise!!");
-        
+
         System.out.println("1. Register");
         System.out.println("2. Login\n");
-        
+
         System.out.print("Choose: ");
-        
+
         int inp = parseInt(input.nextLine());
-        
+
         if(inp == 1){
             register();
         }
@@ -74,7 +74,7 @@ public class system {
         System.out.println("\n!!ACCOUNT REGISTRATION!!");
         System.out.print("Username: ");
         String username = input.nextLine();
-        
+
         System.out.print("Password: ");
         String password = input.nextLine();
         
@@ -101,14 +101,14 @@ public class system {
         menu();
     }
     public void login() throws Exception{
-        
+
         System.out.println("\n!!LOGIN PAGE !!");
         System.out.print("Username: ");
         String username = input.nextLine();
-        
+
         System.out.print("Password: ");
         String password = input.nextLine();
-        
+
         int user_id = x.login(username, password);
         if(user_id >0){
             System.out.println("\nPlease Enter IC/Passport Number to verify");
@@ -129,7 +129,7 @@ public class system {
                 System.out.println("Validation Fail! Please Retry");
                 menu();
             }
-        
+
         }
         else if(user_id == 0) {
            System.out.println("Admin loging in...");
@@ -138,9 +138,10 @@ public class system {
            admin_menu();
         }
         else{
-            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
+            System.out.println("LOGIN SALAH, USERNAME/PASSWORD IS WRONG");
+            System.out.println("LOGIN FAIL IDIH, USERNAME/PASSWORD IS WRONG");
             menu();
-        } 
+        }
     }
     
     public void account_menu() throws Exception{

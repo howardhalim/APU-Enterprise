@@ -28,34 +28,34 @@ import java.util.List;
 public class Server implements Interface {
     private static Server APUServer = null;
     private String serverName = null;
-    
-     public Server (String name){
-         this.setServerName(name);
+
+    public Server (String name){
+        this.setServerName(name);
     }
-     public String getServerName(){
-         return serverName;
-     }
+    public String getServerName(){
+        return serverName;
+    }
     public void setServerName(String serverName){
         this.serverName= serverName;
     }
-    
+
     public static void main (String args[]) throws RemoteException, AlreadyBoundException{
-         
-             APUServer = new Server ("APUServer");
-             Registry reg = LocateRegistry.createRegistry(1098);
-             Remote obj = UnicastRemoteObject.exportObject(APUServer,1098);
-             reg.bind(APUServer.getServerName(),obj);
-             System.out.println("APU Server Started");
-     }
+
+        APUServer = new Server ("APUServer");
+        Registry reg = LocateRegistry.createRegistry(1098);
+        Remote obj = UnicastRemoteObject.exportObject(APUServer,1098);
+        reg.bind(APUServer.getServerName(),obj);
+        System.out.println("APU Server Started");
+    }
     public static Connection connect(){
 
-       Connection con = null;
+        Connection con = null;
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:D:\\DCOMS\\APU-Enterprise\\APUDatabase.db";
+            String url = "jdbc:sqlite:APUDatabase.db";
             con = DriverManager.getConnection(url);
-            
+
         }
         catch (SQLException s)
         {
@@ -68,12 +68,12 @@ public class Server implements Interface {
             return 0;
         }
         String sql = "SELECT * FROM account";
-        
-        
+
+
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
-            
+
             // loop through the result set
             while (rs.next()) {
                 String user = rs.getString("username");
@@ -88,22 +88,22 @@ public class Server implements Interface {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return -1;
     }
-    
+
     public boolean verifyLogin(int user_id, String validation){
         String sql = "SELECT * FROM account";
         boolean found = false;
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
-            
+
             // loop through the result set
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String valid = rs.getString("ic_passportnum");
-                
+
                 if(id == user_id && validation.equals(valid)){
                     found = true;
                 }
@@ -111,7 +111,7 @@ public class Server implements Interface {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return found;
     }
     
@@ -122,7 +122,7 @@ public class Server implements Interface {
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
-            
+
             // loop through the result set
             while (rs.next()) {
                 String user = rs.getString("username");
@@ -186,6 +186,6 @@ public class Server implements Interface {
         }
         return null;
     }
-    
-    
+
+
 }
