@@ -55,7 +55,7 @@ public class Server implements Interface {
         try
         {
             //change to appropriate directory
-            String url = "jdbc:sqlite:C:/Users/Asus/Desktop/DCOMS GIT/APUDatabase.db";
+            String url = "jdbc:sqlite:E:\\Lecture\\0_Assignment\\Year 3\\DCOMS\\APU-Enterprise\\APUDatabase.db";
             con = DriverManager.getConnection(url);
 
         }
@@ -278,6 +278,41 @@ public class Server implements Interface {
                 data.add(temp);
             }
               
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
+
+    public List<List<String>> listInven() throws Exception{
+        String sql = "SELECT * FROM inventory ORDER BY item_name ASC;";
+        List<List<String>> data = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            // loop through the result set
+            while (rs.next()) {
+
+                int x = rs.getInt("id");
+                String item_name = rs.getString("item_name");
+                String brand = rs.getString("brand");
+                String category = rs.getString("category");
+                String stock = rs.getString("stock");
+                String price = rs.getString("price");
+                String date_stored = rs.getString("date_stored");
+
+                List<String> temp = new ArrayList<>();
+                temp.add(item_name);
+                temp.add(brand);
+                temp.add(category);
+                temp.add(stock);
+                temp.add(price);
+                temp.add(date_stored);
+                data.add(temp);
+            }
+
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

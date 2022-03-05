@@ -75,6 +75,7 @@ public class system {
             System.out.println("Wrong Choice");
         }
     }
+    
     public void register() throws Exception{
         System.out.println("\n!!ACCOUNT REGISTRATION!!");
         System.out.print("Username: ");
@@ -105,6 +106,7 @@ public class system {
         
         menu();
     }
+    
     public void login() throws Exception{
         System.out.println("\n!!LOGIN PAGE !!");
         System.out.print("Username: ");
@@ -142,11 +144,11 @@ public class system {
            admin_menu();
         }
         else{
-            System.out.println("LOGIN SALAH, USERNAME/PASSWORD IS WRONG");
-            System.out.println("LOGIN FAIL IDIH, USERNAME/PASSWORD IS WRONG");
+            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
             menu();
         }
     }
+    
     public void editAccount() throws Exception{
 
         String buggy = input.nextLine();
@@ -158,7 +160,9 @@ public class system {
         String password = input.nextLine();
 
         x.editAccount(username, newusername, password);
+        System.out.println("### Done ###\n");
     }
+    
     public void account_menu() throws Exception{
         List<String>data = x.retreiveAccount(account_id);
         if(data == null){
@@ -172,6 +176,7 @@ public class system {
         System.out.println("2. Store New Inventory");
         System.out.println("3. List Inventory");
         System.out.println("4. Generate Report");
+        System.out.println("0. EXIT");
         
         System.out.println("-------------------------------");
         System.out.print("Choice: ");
@@ -179,23 +184,32 @@ public class system {
         int ch = input.nextInt();
         String dum = input.nextLine();
         switch(ch){
+            case 0:{
+                System.out.println(" >>> Thank you for using our service! <<< ");
+                break;
+            }
+          
             case 1:{
                 editAccount();
+                account_menu();
                 break;
             }
                 
             case 2:{
                 storeNewInven();
+                account_menu();
                 break;
             }
                 
             case 3:{
                 listInven();
+                account_menu();
                 break;
             }
                 
             case 4:{
                 generateReport();
+                account_menu();
                 break;
             }
                 
@@ -231,9 +245,7 @@ public class system {
         TimeUnit.SECONDS.sleep(2);
         System.out.println("----------------------");
         System.out.println("Item Stored!");
-        System.out.println("----------------------");
-        
-        account_menu();
+        System.out.println("----------------------\n");
         
     }
     
@@ -245,12 +257,18 @@ public class system {
         System.out.println("3. Edit Executive Account");
         System.out.println("4. List Inventory");
         System.out.println("5. Generate Report");
+        System.out.println("0. EXIT");
         System.out.println("-------------------------------");
         System.out.print("Choice: ");
         
         int ch = input.nextInt();
         String dum = input.nextLine();
         switch(ch){
+            case 0:{
+                System.out.println(" >>> Thank you for using our service! <<< ");
+                break;
+            }
+            
             case 1:{
             try {
                 listAllExec();
@@ -264,20 +282,24 @@ public class system {
                 
             case 2:{
                 deleteExec();
+                admin_menu();
                 break;
             }
                 
             case 3:{
                 editExec();
+                admin_menu();
                 break;
             }
                 
             case 4:{
                 listInven();
+                admin_menu();
                 break;
             }
             case 5:{
                 generateReport();
+                admin_menu();
                 break;
             }    
             
@@ -291,14 +313,17 @@ public class system {
     }
     public void listAllExec() throws Exception{
         List<List<String>> data = x.listAllExec();
-        for(int i = 0;i<data.size();i++){
-            List<String> temp = data.get(i);
-            System.out.println("-------------------------");
-            System.out.println("Name: "+temp.get(0)+" "+temp.get(1));
-            System.out.println("IC/Passport: "+temp.get(2));
-            
+        if (data.isEmpty()){
+            System.out.println("Data Empty");
+        } else {
+            for(int i = 0;i<data.size();i++){
+                List<String> temp = data.get(i);
+                System.out.println("-------------------------");
+                System.out.println("Name: "+temp.get(0)+" "+temp.get(1));
+                System.out.println("IC/Passport: "+temp.get(2));
+            }
         }
-        System.out.println("-------------------------");
+        System.out.println("### Done ###\n");
     }
     
     public void deleteExec() throws Exception {
@@ -306,15 +331,31 @@ public class system {
         String usernamedel = input.nextLine();
         x.deleteExec(usernamedel);
         TimeUnit.SECONDS.sleep(2);
-        System.out.println("Account Deleted !");
+        System.out.println("Account Deleted !\n");
     }
 
     private void editExec() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void listInven() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void listInven() throws Exception {
+        List<List<String>> data = x.listInven();
+        if (data.isEmpty()){
+            System.out.println("Data Empty");
+        } else {
+            for(int i = 0;i<data.size();i++){
+                List<String> temp = data.get(i);
+                System.out.println("-------------------------");
+                System.out.println("Item Name: "+temp.get(0));
+                System.out.println("Brand: "+temp.get(1));
+                System.out.println("Category: "+temp.get(2));
+                System.out.println("Stock: "+temp.get(3));
+                System.out.println("Price: "+temp.get(4));
+                System.out.println("Date Stored: "+temp.get(5));
+                System.out.println("-------------------------");
+            }
+        }
+        System.out.println("### Done ###\n");
     }
 
     private void generateReport() {
