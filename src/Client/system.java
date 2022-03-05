@@ -89,9 +89,7 @@ public class system {
         
         }
         else{
-            System.out.println("LOGIN ERROR, USERNAME/PASSWORD IS WRONG");
-            System.out.print("testing: ");
-            System.out.print("testing2: ");
+            System.out.println("LOGIN FAIL, USERNAME/PASSWORD IS WRONG");
             menu();
         } 
     }
